@@ -1,12 +1,12 @@
 <template>
     <div>
-        Home
+        Page2
     </div>
 </template>
 
 <script>
 export default {
-  name: 'HomePage',  // Renommez le nom du composant
+  name: 'PageTwo',  // Renommez le nom du composant
   // autres propriétés et méthodes
 };
 </script>

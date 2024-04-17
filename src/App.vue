@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <!-- Barre latérale (sidebar) -->
-    <v-navigation-drawer app v-model="drawer" :width="customWidth" >
+    <v-navigation-drawer app v-model="drawer" :width="customWidth" color="#1F1D2B">
       <v-list class="containerList">
         <!-- Logo et bouton de fermeture -->
         <v-list-item>
@@ -9,7 +9,7 @@
         </v-list-item>
 
         <!-- Icônes au centre -->
-        <v-list-item v-for="item in items" :key="item.title" @click="navigate(item.route)">
+        <v-list-item v-for="item in items" :key="item.title" @click="navigate(item.name)">
           <v-list-item-title><img :src="getIcon(item.icone)" alt=""> {{ item.title }}</v-list-item-title>
         </v-list-item>
         <v-list-item @click.stop="drawer = !drawer">
@@ -31,16 +31,16 @@
       </v-app-bar>
 
       <v-container fluid>
-        <HomePage />
+        <router-view></router-view>
       </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HomePage from './pages/HomePage.vue';
 import logo from './assets/logo/logo.svg';
 import openDrawer from './assets/icons/openDrawer.svg';
+import home from './assets/icons/home.svg';
 import one from './assets/icons/one.svg';
 import two from './assets/icons/two.svg';
 import three from './assets/icons/three.svg';
@@ -62,7 +62,6 @@ import {
 
 export default {
   components: {
-    HomePage,
     VApp,
     VNavigationDrawer,
     VList,
@@ -81,22 +80,21 @@ export default {
       drawer: true,
       customWidth: 100,
       items: [
-        { icone: 'one', title: '', route: '/' },
-        { icone: 'two', title: '', route: '/products' },
-        { icone: 'three', title: '', route: '/contact' },
-        { icone: 'four', title: '', route: '/contact' },
-        { icone: 'five', title: '', route: '/contact' },
+        { icone: 'home', title: '', route: '/', name: 'HomePage' },
+        { icone: 'two', title: '', route: '/page1', name: 'Page1' },
+        { icone: 'three', title: '', route: '/page2', name: 'Page2' },
+        { icone: 'four', title: '', route: '/page3', name: 'Page3' },
+        { icone: 'five', title: '', route: '/page4', name: 'Page4' },
       ],
       logo: logo,
       iconeDrawer: openDrawer,
-      icons: { one, two, three, four, five }
+      icons: { home, one, two, three, four, five }
     };
   },
 
   methods: {
-    navigate(route) {
-      this.$router.push(route);
-      this.drawer = false;
+    navigate(routeName) {
+      this.$router.push({ name: routeName });
     },
     getIcon(iconName) {
       return this.icons[iconName];
@@ -106,12 +104,15 @@ export default {
 </script>
 
 
-<style> 
-
+<style>
 /* Drawer */
 
+.v-navigation-drawer {
+  width: auto !important;
+  border-right: none !important;
+}
+
 .v-navigation-drawer__content {
-  background-color: #1F1D2B !important;
   border-right: 1px solid #EA7C69;
 }
 
@@ -128,6 +129,7 @@ export default {
 
 /* ********************************************************************************************* */
 
-
-
+.appbar {
+  background-color: #1F1D2B !important;
+}
 </style>
